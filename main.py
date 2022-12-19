@@ -6,25 +6,6 @@ from datetime import datetime,timedelta
 import smtplib
 from unidecode import unidecode
 from tkinter import *
-import schedule
-
-
-def checkbox_choice():
-    state = radio_state.get()
-    if state == 'Everyweek':
-        everyweek()
-    elif state == 'Everyday':
-        everyday()
-def everyday():
-    schedule.every().day.until(timedelta(weeks=12)).do(start())
-    while True:
-        schedule.run_pending()
-        time.sleep(18000)
-def everyweek():
-    schedule.every().friday.at("08:00").until(timedelta(weeks=12)).do(start())
-    while True:
-        schedule.run_pending()
-        time.sleep(18000)
 
 def start():
     BUY_PRICE=price.get()
@@ -66,7 +47,7 @@ price=IntVar()
 price_Entry=Entry(width=30,textvariable=price)
 price_Entry.grid(row=5,column=1)
 
-track_btn=Button(text="Track Price",command=checkbox_choice,highlightthickness=1)
+track_btn=Button(text="Track Price",command=start,highlightthickness=1)
 track_btn.grid(row=6,column=1)
 
 radio_state=StringVar()
