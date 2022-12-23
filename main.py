@@ -16,31 +16,31 @@ def radio_choice():
         week = (6 * 24 * 60 * 60)
         start(week)
 
+
 def start(waiting_time):
-    BUY_PRICE = price.get()
-    now_time = datetime.now().strftime("%I:%M %p")
-    print(BUY_PRICE)
-    if now_time == "03:53 AM":
+    wait_more = True
+    while wait_more:
+        BUY_PRICE = price.get()
         searching = Scrabing(url=url_Entry.get())
         price_without_tag = searching.Get_Price()
-        print(price_without_tag)
         product_title = searching.Get_Title().strip()
-        print(unidecode(product_title))
         if price_without_tag <= float(BUY_PRICE):
             message = f"{product_title} is now {BUY_PRICE} or less."
             print("message sent.")
+
+            # Handles the sending message
             with smtplib.SMTP("smtp.gmail.com", port=587) as connection:
                 connection.starttls()
                 # Enter your Private Email and password here.
-                connection.login(user=, password=)
+                connection.login(user='', password='')
                 connection.sendmail(from_addr="ahmedgebril1889@gmail.com",
                                     to_addrs="ahmedgebril1889@gmail.com",
                                     msg=f"Subject:\n\n{unidecode(product_title)} is now {BUY_PRICE} or less.")
+            wait_more=False
         else:
             print('still not the right price')
-    else:
-        print('still waiting for the right time')
-        time.sleep(waiting_time)
+            time.sleep(waiting_time)
+            wait_more = True
 
 
 
